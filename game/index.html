@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Head Football</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <main>
+
+        <section class="screen register">
+            <form>
+                <h1>World Head Football</h1>
+                <label>
+                    Insert username : <input type="text" name="username" id="username">
+                </label>
+                <label>
+                    Select level : <select name="level" id="level">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </label>
+                <label>
+                    Select your team <select name="my_team" id="my_team">
+                        <option>Brazil</option>
+                        <option>England</option>
+                        <option>Germany</option>
+                        <option>Italy</option>
+                        <option>Japan</option>
+                        <option>Netherlands</option>
+                        <option>Portugal</option>
+                        <option>Spain</option>
+                    </select>
+                </label>
+                <label>
+                    Select opponent team <select name="opponent_team" id="opponent_team">
+                        <option>Brazil</option>
+                        <option>England</option>
+                        <option>Germany</option>
+                        <option>Italy</option>
+                        <option>Japan</option>
+                        <option>Netherlands</option>
+                        <option>Portugal</option>
+                        <option>Spain</option>
+                    </select>
+                </label>
+                <div class="selector">
+                    <label>
+                        <img src="assets/Ball 01.png" alt="ball 1" height="50">
+                        <input type="radio" name="ball" id="ball" value="Ball 01.png" checked>
+                    </label>
+                    <label>
+                        <img src="assets/Ball 02.png" alt="ball 2" height="50">
+                        <input type="radio" name="ball" id="ball" value="Ball 02.png">
+                    </label>
+                </div>
+                <div class="buttons">
+                    <button id="random" type="button">Randomize</button>
+                    <button type="submit">Play Game</button>
+                    <button id="instruction" type="button">Instruction</button>
+                </div>
+            </form>
+            <div class="instruction">
+                <h1>Instruction <span>X</span></h1>
+                <ol>
+                    <li>Insert username, select level, choose team, choose ball</li>
+                    <li>Click play game button to start game</li>
+                    <li>Game played after countdown 3 seconds</li>
+                    <li>Control the character with A,W,D,SPACE</li>
+                    <li>Item will drop every 5 seconds</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="screen countdown">
+
+        </section>
+
+        <section class="screen gameboard">
+
+        </section>
+
+    </main>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
