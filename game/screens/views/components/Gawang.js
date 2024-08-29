@@ -16,6 +16,6 @@ export default class Gawang {
             this.el.style.transform = 'translate(-50%, -50%) scaleX(-1)'
         }
 
-        screenController.gameboard.mainBoard.appendChild(this.el)
+        screenController.gameboard.mainBoard.appendChild(this.el);
     }
 }
