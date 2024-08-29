@@ -17,7 +17,7 @@ class PortfolioController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum'),
-            new Middleware(AdminMiddleware::class, except: ['index'])
+            new Middleware(AdminMiddleware::class, except: ['index', 'show'])
         ];
     }
 
@@ -26,6 +26,22 @@ class PortfolioController extends Controller implements HasMiddleware
             'status' => 'success',
             'message' => 'Success get all portfolio',
             'data' => Portfolio::all()
+        ]);
+    }
+
+    public function show(string $id){
+        if(!($portfolio = Portfolio::query()->find($id))) return response()->json([
+            'status' => 'not-found',
+            'message' => 'Portfolio not found'
+        ], 400);
+
+        $portfolio->views += 1;
+        $portfolio->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'success get portfolio detail',
+            'data' => $portfolio
         ]);
     }
 
@@ -40,6 +56,8 @@ class PortfolioController extends Controller implements HasMiddleware
             $path = Storage::putFile('portfolio_image', $params['image']);
             $params['image'] = $path;
         }
+
+        $params['views'] = 0;
 
         $user = User::query()->find(Auth::user()->id);
         $porto = $user->Portfolios()->create($params);

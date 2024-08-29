@@ -22,14 +22,15 @@ class CaptchaController extends Controller implements HasMiddleware
     public function index(){
         $first = rand(10, 29);
         $second = rand(10, 29);
-        $content = Hash::make("$first + $second");
+        $content = Hash::make($first + $second);
         if($captcha = Captcha::query()->where('user_id', Auth::user()->id)->first()) $captcha->delete();
 
         $captcha = Captcha::query()->create(['content' => $content, 'user_id' => Auth::user()->id]);
+        $captcha->question = "$first + $second";
         return response()->json([
             'status' => 'success',
             'message' => 'Make captcha successfully',
-            'data' => $captcha->only(['id', 'content'])
+            'data' => $captcha->only(['id', 'question'])
         ], 201);
     }
 
@@ -39,7 +40,7 @@ class CaptchaController extends Controller implements HasMiddleware
             'message' => 'Captcha invalid'
         ], 400);
 
-        if($captcha->content !== $request->answer) return response()->json([
+        if(!$this->check($captcha, $request->answer)) return response()->json([
             'status' => 'failed',
             'message' => 'Captcha invalid'
         ], 400);
@@ -48,5 +49,12 @@ class CaptchaController extends Controller implements HasMiddleware
             'status' => 'success',
             'message' => 'Captcha validated.'
         ]);
+    }
+
+    public static function check(Captcha $captcha, $answer){
+        $check = Hash::check($answer, $captcha->content);
+        if($check) $captcha->delete();
+
+        return $check;
     }
 }

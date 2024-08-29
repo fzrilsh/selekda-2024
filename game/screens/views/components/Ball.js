@@ -9,6 +9,8 @@ export default class Ball {
         this.top = false
         this.left = false
         this.right = false
+
+        this.freezee = false
     }
 
     make(){
@@ -17,7 +19,7 @@ export default class Ball {
         this.el.style.background = `url("assets/${screenController.register.data.ball}")`
         this.el.style.backgroundSize = '100% 100%'
 
-        screenController.gameboard.mainBoard.appendChild(this.el)
+        screenController.gameboard.el.appendChild(this.el)
         this.listen()
     }
 
@@ -29,15 +31,26 @@ export default class Ball {
     }
 
     move(direction, status){
+        if(this.freezee) return;
+        
         this[direction] = status
     }
 
     Bottom(){
-        if(this.el.offsetTop >= 20){
+        if(this.el.offsetTop >= 470){
             this.bottom = false
             return false
         }
 
         this.el.style.top = `${this.el.offsetTop+2}px`
+    }
+
+    freeze(){
+        this.freezee = true
+        this.el.style.filter = `sepia(100%) hue-rotate(150deg) saturate(500%)`
+        setTimeout(() => {
+            this.freezee = false
+            this.el.style.filter = 'none'
+        }, 3000);
     }
 }

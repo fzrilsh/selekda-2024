@@ -4,6 +4,7 @@ export default class Item {
     constructor(type){
         this.el = null
         this.type = type
+        this.removed = false
 
         this.make()
     }
@@ -24,11 +25,26 @@ export default class Item {
     }
 
     listen(){
-        requestAnimationFrame(this.listen.bind(this))
+        if(!this.removed) requestAnimationFrame(this.listen.bind(this))
 
         if(this.el.offsetTop >= 480) return;
         this.el.style.top = this.el.offsetTop + 2 + 'px'
 
-        console.log(screenController.gameboard.collisions(this.el, screenController.gameboard.ball.el))
+        if(screenController.gameboard.collisions(this.el, screenController.gameboard.ball.el)){
+            this.removed = true
+            this.el.remove()
+
+            if(this.type === 'Increase Ball'){
+                screenController.gameboard.ball.el.style.width = screenController.gameboard.ball.el.offsetWidth + 5 + 'px'
+                screenController.gameboard.ball.el.style.height = screenController.gameboard.ball.el.offsetHeight + 5 + 'px'
+            }
+            if(this.type === 'Decrease Ball'){
+                screenController.gameboard.ball.el.style.width = screenController.gameboard.ball.el.offsetWidth - 2 + 'px'
+                screenController.gameboard.ball.el.style.height = screenController.gameboard.ball.el.offsetHeight - 2 + 'px'
+            }
+            if(this.type === 'Diamond Ice'){
+                screenController.gameboard.ball.freeze()
+            }
+        }
     }
 }

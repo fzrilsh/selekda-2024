@@ -249,14 +249,15 @@ main {
 
 .ball {
     position: absolute;
-    top: -100px; /* 22px */
+    top: 350px; /* 22px */
     left: 50%;
     transform: translate(-50%, -50%);
     width: 60px;
     height: 60px;
     background: url(assets/Ball\ 01.png);
     background-size: 100% 100%;
-    z-index: -1;
+    transition: filter .4s;
+    z-index: 1;
 }
 
 .item {

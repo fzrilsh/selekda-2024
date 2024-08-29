@@ -16,7 +16,7 @@ class BlogController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum'),
-            new Middleware(AdminMiddleware::class, except:['index'])
+            new Middleware(AdminMiddleware::class, except:['index', 'show'])
         ];
     }
 
@@ -24,7 +24,23 @@ class BlogController extends Controller implements HasMiddleware
         return response()->json([
             'status' => 'success',
             'message' => 'Success get all blog',
-            'data' => Blog::all()->append(['tags', 'comments'])
+            'data' => Blog::all()->append(['author', 'comments_count'])
+        ]);
+    }
+
+    public function show(string $id){
+        if(!($blog = Blog::query()->find($id))) return response()->json([
+            'status' => 'not-found',
+            'message' => 'Blog not found'
+        ], 400);
+
+        $blog->views += 1;
+        $blog->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Success get all blog',
+            'data' => $blog->append(['author', 'tags', 'comments', 'comments_count'])
         ]);
     }
 
@@ -44,7 +60,8 @@ class BlogController extends Controller implements HasMiddleware
         $blog = Auth::user()->Blogs()->create([
             'image' => $params['image'],
             'title' => $params['title'],
-            'description' => $params['description']
+            'description' => $params['description'],
+            'views' => 0
         ]);
         foreach(explode(',', $params['tags']) as $tag){
             $blog->Tags()->create(['name' => $tag]);

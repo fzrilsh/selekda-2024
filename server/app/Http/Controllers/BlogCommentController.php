@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\Blog;
 use App\Models\Captcha;
 use Closure;
@@ -36,11 +37,10 @@ class BlogCommentController extends Controller implements HasMiddleware
             'subject' => 'required|string',
             'comment' => 'required|string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
-                if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
+                $captcha = Captcha::query()->where('user_id', Auth::user()->id)->first();
+                if(!$captcha || !CaptchaController::check($captcha, $value)) $fail('Captcha is invalid.');
             }]
         ]);
-
-        Captcha::query()->where('content', $params['captcha'])->where('user_id', Auth::user()->id)->first()->delete();
         unset($params['captcha']);
 
         $blog->comments()->create($params);
@@ -59,11 +59,10 @@ class BlogCommentController extends Controller implements HasMiddleware
             'subject' => 'string',
             'comment' => 'string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
-                if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
+                $captcha = Captcha::query()->where('user_id', Auth::user()->id)->first();
+                if(!$captcha || !CaptchaController::check($captcha, $value)) $fail('Captcha is invalid.');
             }]
         ]);
-
-        Captcha::query()->where('content', $params['captcha'])->where('user_id', Auth::user()->id)->first()->delete();
         unset($params['captcha']);
 
         $comment->update($params);

@@ -13,6 +13,10 @@ class Blog extends Model
     public $timestamps = true;
     protected $guarded = [];
 
+    public function Author(){
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
     public function comments(){
         return $this->hasMany(BlogComment::class);
     }
@@ -25,7 +29,15 @@ class Blog extends Model
         return $this->Tags()->get();
     }
 
+    public function getAuthorAttribute(){
+        return $this->Author()->first();
+    }
+
     public function getCommentsAttribute(){
         return $this->comments()->get();
+    }
+
+    public function getCommentsCountAttribute(){
+        return $this->comments()->get()->count();
     }
 }
