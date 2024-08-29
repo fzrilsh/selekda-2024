@@ -6,4 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post(['password'])
 
-// Route::apiResource('/scores', ScoreController::class);
+Route::apiResource('/scores', ScoreController::class);
