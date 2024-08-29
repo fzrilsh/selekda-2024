@@ -15,7 +15,13 @@ export default class Register {
         this.randomButton = this.form.querySelector('button#random')
 
         this.interval = null
-        this.data = {}
+        this.data = {
+            username: 'fazril',
+            my_team: 'Brazil',
+            opponent_team: 'Germany',
+            ball: 'Ball 01.png',
+            level: 'easy'
+        }
     }
 
     mount(){

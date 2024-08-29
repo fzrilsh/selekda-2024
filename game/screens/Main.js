@@ -12,7 +12,7 @@ class ScreenController {
     }
 
     init(){
-        this.change('register')
+        this.change('gameboard')
     }
 
     change(screen){
