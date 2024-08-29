@@ -1,10 +1,31 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import useFetch from "../hooks/useFetch";
+import { useEffect } from "react";
 
 export default function Register(){
-return <main id="register">
+    const {user, login} = useAuth()
+    const {fetch} = useFetch()
+    const navigate = useNavigate()
+
+    const submitHandler = async(e) => {
+        e.preventDefault()
+
+        let resp = await fetch({ method: 'post', path: '/register', value: new FormData(e.target) })
+        if(!resp.status) return alert(resp.message)
+
+        login(resp.data)
+        navigate('/')
+    }
+
+    useEffect(() => {
+        if(user?.token) return navigate('/')
+    })
+
+    return <main id="register">
         <div className="card">
             <h1>Register</h1>
-            <form>
+            <form onSubmit={submitHandler}>
                 <div className="input">
                     <input type="text" name="name" id="name" placeholder="John Doe" required/>
                     <input type="text" name="username" id="username" placeholder="john.doe" required/>
