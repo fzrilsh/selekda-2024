@@ -124,6 +124,21 @@ main {
     align-items: center;
 }
 
+.screen.gameboard header .top span {
+    background-color: rgb(54, 54, 54);
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-weight: bolder;
+}
+.screen.gameboard header .top button {
+    background-color: rgb(33, 48, 132);
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: none;
+    font-weight: bolder;
+    color: white;
+}
+
 .screen.gameboard header .scores {
     display: flex;
     justify-content: center;
@@ -205,18 +220,40 @@ main {
 .screen.gameboard .main {
     position: relative;
     width: 100%;
-    height: 100px;
+    height: 110px;
     top: calc(600px - 370px);
     z-index: 99;
-    background-color: red;
 }
 
 .player {
     position: absolute;
     top: 0;
+    left: 40%;
+    transform: translate(-50%, -50%);
     width: 140px;
     height: 150px;
     background: url(assets/Characters/Brazil/Idle/Idle_000.png);
     background-size: 100% 100%;
+}
 
+.gawang {
+    position: absolute;
+    top: -38px;
+    left: 94px;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 180px;
+    background: url(assets/Goal\ -\ Side.png);
+    background-size: 100% 100%;
+}
+
+.ball {
+    position: absolute;
+    top: -100px; /* 22px */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: url(assets/Ball\ 01.png);
+    background-size: 100% 100%;
 }
