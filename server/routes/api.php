@@ -18,5 +18,5 @@ Route::post('/blog/{blog_id}/comment', [BlogCommentController::class, 'store']);
 Route::put('/blog/{blog_id}/comment/{comment_id}', [BlogCommentController::class, 'update']);
 Route::delete('/blog/{blog_id}/comment/{comment_id}', [BlogCommentController::class, 'destroy']);
 
-Route::apiResource('/scores', ScoreController::class);
+// Route::apiResource('/scores', ScoreController::class);
 Route::apiResource('/captcha', CaptchaController::class);
