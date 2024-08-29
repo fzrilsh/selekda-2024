@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function Blogs(){
         return $this->hasMany(Blog::class, 'author_id');
     }
+
+
+    public function getLeaderboardAttribute(){
+        return $this->Scores()->get()->sortBy([['score', 'desc']])->values();
+    }
 }

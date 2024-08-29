@@ -34,11 +34,14 @@ class BlogCommentController extends Controller implements HasMiddleware
             'name' => 'required|string',
             'email' => 'required|email',
             'subject' => 'required|string',
-            'comment' => 'required|text',
+            'comment' => 'required|string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
                 if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
             }]
         ]);
+
+        Captcha::query()->where('content', $params['captcha'])->where('user_id', Auth::user()->id)->first()->delete();
+        unset($params['captcha']);
 
         $blog->comments()->create($params);
         return response()->json([
@@ -59,6 +62,9 @@ class BlogCommentController extends Controller implements HasMiddleware
                 if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
             }]
         ]);
+
+        Captcha::query()->where('content', $params['captcha'])->where('user_id', Auth::user()->id)->first()->delete();
+        unset($params['captcha']);
 
         $comment->update($params);
         return response()->json([

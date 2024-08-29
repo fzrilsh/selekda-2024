@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
 
 class CaptchaController extends Controller implements HasMiddleware
 {
@@ -28,12 +29,12 @@ class CaptchaController extends Controller implements HasMiddleware
         return response()->json([
             'status' => 'success',
             'message' => 'Make captcha successfully',
-            'data' => $captcha->only(['uuid', 'content'])
+            'data' => $captcha->only(['id', 'content'])
         ], 201);
     }
 
     public function update(Request $request, string $id){
-        if(!($captcha = Captcha::query()->where('uuid', $id)->first())) return response()->json([
+        if(!($captcha = Captcha::query()->find($id))) return response()->json([
             'status' => 'failed',
             'message' => 'Captcha invalid'
         ], 400);
@@ -43,7 +44,6 @@ class CaptchaController extends Controller implements HasMiddleware
             'message' => 'Captcha invalid'
         ], 400);
 
-        $captcha->delete();
         return response()->json([
             'status' => 'success',
             'message' => 'Captcha validated.'

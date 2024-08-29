@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Captcha extends Model
 {
     use HasFactory;
+
+    public $timestamps = true;
+    protected $guarded = [];
 }

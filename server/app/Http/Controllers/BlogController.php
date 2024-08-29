@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Blog;
 use App\Models\BlogTag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -25,7 +26,7 @@ class BlogController extends Controller implements HasMiddleware
             'image' => 'required|file|mimes:jpeg,jpg,png',
             'title' => 'required|string',
             'description' => 'required|string',
-            'tags' => 'required|array'
+            'tags' => 'required|string'
         ]);
 
         if($params['image']){
@@ -33,15 +34,38 @@ class BlogController extends Controller implements HasMiddleware
             $params['image'] = $path;
         }
 
-        $blog = Auth::user()->Blogs()->create($params);
-        foreach($params['tags'] as $tag){
+        $blog = Auth::user()->Blogs()->create([
+            'image' => $params['image'],
+            'title' => $params['title'],
+            'description' => $params['description']
+        ]);
+        foreach(explode(',', $params['tags']) as $tag){
             $blog->Tags()->create(['name' => $tag]);
         }
+
 
         return response()->json([
             'status' => 'success',
             'message' => 'Success create blog',
             'data' => $blog
         ], 201);
+    }
+
+    public function update(Request $request, string $id){
+        if(!($blog = Blog::query()->find($id))) return response()->json([
+            'status' => 'not-found',
+            'message' => 'Blog not found'
+        ], 400);
+        $params = $request->validate([
+            'image' => 'file|mimes:jpeg,jpg,png',
+            'title' => 'string',
+            'description' => 'string',
+            'tags' => 'string'
+        ]);
+
+        if($params['image']){
+            $path = Storage::putFile('blog_image', $params['image']);
+            $params['image'] = $path;
+        }
     }
 }

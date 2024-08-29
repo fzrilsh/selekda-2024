@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('captchas', function (Blueprint $table) {
-            $table->uuid();
+            $table->id();
             $table->foreignId('user_id')->constrained(table: 'users');
             $table->string('content');
             $table->timestamps();

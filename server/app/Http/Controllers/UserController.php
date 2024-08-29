@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -16,8 +17,17 @@ class UserController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('auth:sanctum')
+            new Middleware('auth:sanctum'),
+            new Middleware(AdminMiddleware::class, only:['index'])
         ];
+    }
+
+    public function index(){
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Success get all user',
+            'data' => User::all()
+        ]);
     }
 
     public function show(string $id){
