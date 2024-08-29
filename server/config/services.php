@@ -24,6 +24,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'captcha' => [
+        'site_key' => env('CAPTCHA_SITE_KEY'),
+        'secret_key' => env('CAPTCHA_SECRET_KEY'),
+    ],
+
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],

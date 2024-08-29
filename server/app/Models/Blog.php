@@ -12,4 +12,8 @@ class Blog extends Model
 
     public $timestamps = true;
     protected $guarded = [];
+
+    public function comments(){
+        return $this->hasMany(BlogComment::class);
+    }
 }
