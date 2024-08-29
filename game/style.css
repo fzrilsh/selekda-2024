@@ -256,4 +256,5 @@ main {
     height: 60px;
     background: url(assets/Ball\ 01.png);
     background-size: 100% 100%;
+    z-index: -1;
 }

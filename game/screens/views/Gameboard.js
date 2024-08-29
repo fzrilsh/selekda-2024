@@ -39,6 +39,7 @@ export default class Gameboard {
         this.my_gawang = new Gawang()
         this.opponent_gawang = new Gawang(true)
         this.ball = new Ball()
+        this.ball.move('bottom', true)
 
         this.timer = this.level === 'easy' ? '30' : this.level === 'medium' ? 20 : 15
         this.makeFlag()
