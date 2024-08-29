@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->date('date_of_birth');
             $table->string('phone_number');
-            $table->string('pp_path')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->enum('role', ['user', 'admin']);
             $table->timestamps();
         });

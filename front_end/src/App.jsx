@@ -1,4 +1,5 @@
 import { useRoutes } from "react-router-dom";
+import Game from "./views/Game";
 
 export default function App(){
   return useRoutes([
@@ -7,8 +8,8 @@ export default function App(){
       element: <>Home</>
     },
     {
-      path: '/game',
-      
+      path: '/play-game',
+      element: <Game />
     }
   ])
 }

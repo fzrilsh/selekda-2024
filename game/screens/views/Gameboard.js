@@ -59,19 +59,18 @@ export default class Gameboard {
             if(key === 'Escape') this.pause()
         })
 
-        this.el.querySelector('#history-button').onclick = () => {
-            let datas = [
-                {
-                    username: 'Jamal',
-                    score: '30'
-                },
-                {
-                    username: 'Jamal',
-                    score: '30'
-                }
-            ]
+        this.el.querySelector('#history-button').onclick = async() => {
+            if(this.leaderboard) return alert(`Match Leaderboard:\n\n${this.leaderboard.map(v => `Name: ${v.username} | Country: ${v.country} | Score: ${v.score}`).join('\n')}`)
 
-            alert(`Match Leaderboard:\n\n${datas.map(v => `Name: ${v.username} | Score: ${v.score}`).join('\n')}`)
+            let data = await fetch('/server/scores', {
+                method: 'get',
+                headers: {
+                    Authorization: 'Bearer '+JSON.parse(localStorage.getItem('user')).token
+                }
+            })
+            this.leaderboard = await data.json()
+
+            alert(`Match Leaderboard:\n\n${this.leaderboard.map(v => `Name: ${v.username} | Country: ${v.country} | Score: ${v.score}`).join('\n')}`)
         }
     }
 
@@ -89,9 +88,21 @@ export default class Gameboard {
         modal.classList.add('active')
         modal.querySelector('#username').textContent = this.username
         modal.querySelector('#country').textContent = this.my_team
-        modal.querySelector('#score').textContent = `${this.scores.join(',')} ${this.scores[0] > this.scores[1] ? 'WIN' : 'LOSE'}`
+        modal.querySelector('#score').textContent = this.scores[0]
         modal.querySelector('button#save').onclick = () => {
-            
+            fetch('/server/scores', {
+                method: 'post',
+                body: {
+                    'username': this.username,
+                    'score': this.scores[0],
+                    'country': this.my_team
+                },
+                headers: {
+                    Authorization: 'Bearer '+JSON.parse(localStorage.getItem('user')).token
+                }
+            }).then(() => {
+                alert('Success save the match')
+            })
         }
         modal.querySelector('button#restart').onclick = () => {
             document.location.reload()

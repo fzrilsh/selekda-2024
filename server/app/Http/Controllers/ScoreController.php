@@ -17,6 +17,14 @@ class ScoreController extends Controller implements HasMiddleware
         ];
     }
 
+    public function index(){
+        $scores = GameLeaderboard::all()->sortBy([['score', 'desc']]);
+        return response()->json([
+            'message' => 'Success get game leaderboard',
+            'data' => $scores
+        ]);
+    }
+
     public function store(Request $request){
         $params = $request->validate([
             'username' => 'required|string',
