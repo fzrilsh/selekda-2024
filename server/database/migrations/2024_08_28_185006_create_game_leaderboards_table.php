@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('game_leaderboards', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained(table: 'users');
             $table->string('username');
-            $table->integer('score');
+            $table->string('country');
+            $table->text('score');
             $table->timestamps();
         });
     }

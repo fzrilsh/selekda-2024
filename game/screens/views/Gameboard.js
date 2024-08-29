@@ -15,6 +15,7 @@ export default class Gameboard {
         this.ball = null
         this.my_team = null
         this.opponent_team = null
+        this.scores = [0,0]
 
         this.player = null
         this.bot = null
@@ -47,7 +48,7 @@ export default class Gameboard {
         this.ball = new Ball()
         this.ball.move('bottom', true)
 
-        this.timer = this.level === 'easy' ? '30' : this.level === 'medium' ? 20 : 15
+        this.timer = 2//this.level === 'easy' ? '30' : this.level === 'medium' ? 20 : 15
         this.makeFlag()
         this.intializeInfo()
         this.intializeInterval()
@@ -59,7 +60,18 @@ export default class Gameboard {
         })
 
         this.el.querySelector('#history-button').onclick = () => {
-            alert()
+            let datas = [
+                {
+                    username: 'Jamal',
+                    score: '30'
+                },
+                {
+                    username: 'Jamal',
+                    score: '30'
+                }
+            ]
+
+            alert(`Match Leaderboard:\n\n${datas.map(v => `Name: ${v.username} | Score: ${v.score}`).join('\n')}`)
         }
     }
 
@@ -72,6 +84,20 @@ export default class Gameboard {
 
         clearInterval(this.intervalItem)
         clearInterval(this.intervalTimer)
+
+        const modal = document.querySelector('.modal')
+        modal.classList.add('active')
+        modal.querySelector('#username').textContent = this.username
+        modal.querySelector('#country').textContent = this.my_team
+        modal.querySelector('#score').textContent = `${this.scores.join(',')} ${this.scores[0] > this.scores[1] ? 'WIN' : 'LOSE'}`
+        modal.querySelector('button#save').onclick = () => {
+            
+        }
+        modal.querySelector('button#restart').onclick = () => {
+            document.location.reload()
+        }
+
+        this.el.style.filter = 'blur(3px)'
     }
 
     pause(){

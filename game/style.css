@@ -269,3 +269,28 @@ main {
     background: url(assets/Decrease\ Ball.png);
     background-size: 100% 100%;
 }
+
+.modal {
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}

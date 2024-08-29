@@ -33,13 +33,15 @@ export default class Player {
     }
 
     listen(){
-        if(screenController.gameboard.gameStarted) requestAnimationFrame(this.listen.bind(this))
+        requestAnimationFrame(this.listen.bind(this))
 
         //direction
-        if(this.left) this.toLeft()
-        if(this.right) this.toRight()
-        if(this.top) this.toUp()
-        if(this.el.offsetTop <= 0) this.toBottom()
+        if(screenController.gameboard.gameStarted){
+            if(this.left) this.toLeft()
+            if(this.right) this.toRight()
+            if(this.top) this.toUp()
+            if(this.el.offsetTop <= 0) this.toBottom()
+        }
     }
 
     listenAnimation(){

@@ -14,6 +14,8 @@ export default class Ball {
     make(){
         this.el = document.createElement('div')
         this.el.classList.add('ball')
+        this.el.style.background = `url("assets/${screenController.register.data.ball}")`
+        this.el.style.backgroundSize = '100% 100%'
 
         screenController.gameboard.mainBoard.appendChild(this.el)
         this.listen()
