@@ -45,7 +45,7 @@ class UserController extends Controller implements HasMiddleware
             'status' => 'not-found',
             'message' => 'User not found'
         ], 400);
-        if(Auth::user()->id !== $user->id) return response()->json(['status' => 'forbidden', 'message' => 'Forbidden Access'], 403);
+        if(Auth::user()->id !== $user->id && Auth::user()->role !== 'admin') return response()->json(['status' => 'forbidden', 'message' => 'Forbidden Access'], 403);
 
         $params = $request->validate([
             'name' => 'string',
@@ -71,10 +71,9 @@ class UserController extends Controller implements HasMiddleware
         if(isset($params['password'])) $params['password'] = Hash::make($params['password']);
 
         $user->update($params);
-        Auth::user()->currentAccessToken()->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Update user success, logged out'
+            'message' => 'Update user success'
         ]);
     }
 }

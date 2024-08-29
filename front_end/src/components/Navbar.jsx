@@ -14,17 +14,31 @@ export default function Navbar(){
     return <nav>
         <ul>
             <li><NavLink to={'/'}><img src="/Computer_Logo.png" alt="Logo" /></NavLink></li>
-            <li id="nav-link"><NavLink to="/blog">News</NavLink></li>
-            <li id="nav-link"><NavLink to="/portfolio">Portfolio</NavLink></li>
             {
-                user?.token ? <>
-                    {
-                        user.role === 'admin' ? <li id="nav-link"><NavLink to={'/admin'}>Admin Dashboard</NavLink></li> : <li id="nav-link"><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
-                    }
-                    <li id="nav-link"><NavLink onClick={userLogout}>Logout</NavLink></li>
-                </> : <>
+                !user?.token && <>
                     <li id="nav-link"><NavLink to="/login">Login</NavLink></li>
                     <li id="nav-link"><NavLink to="/register">Register</NavLink></li>
+                </>
+            }
+            {
+                user?.token && <>
+                    {
+                        user.role === 'user' && <>
+                            <li id="nav-link"><NavLink to="/blog">News</NavLink></li>
+                            <li id="nav-link"><NavLink to="/portfolio">Portfolio</NavLink></li>
+                            <li id="nav-link"><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+                        </>
+                    }
+                    {
+                        user.role === 'admin' && <>
+                            <li id="nav-link"><NavLink to="/admin/banner">Manage Banner</NavLink></li>
+                            <li id="nav-link"><NavLink to="/admin/blog">Manage Blog</NavLink></li>
+                            <li id="nav-link"><NavLink to="/admin/portfolio">Manage Portfolio</NavLink></li>
+                            <li id="nav-link"><NavLink to="/admin/users">Manage Users</NavLink></li>
+                        </>
+                    }
+                    <li id="nav-link"><NavLink to={'/profile'}>Profile</NavLink></li>
+                    <li id="nav-link"><NavLink onClick={userLogout}>Logout</NavLink></li>
                 </>
             }
             <li id="open">Open</li>
@@ -32,17 +46,31 @@ export default function Navbar(){
 
         <ul className="sidebar">
             <li id="close">X</li>
-            <li><NavLink to="/blog">News</NavLink></li>
-            <li><NavLink to="/portfolio">Portfolio</NavLink></li>
             {
-                user?.token ? <>
-                    {
-                        user.role === 'admin' ? <li><NavLink to={'/admin'}>Admin Dashboard</NavLink></li> : <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
-                    }
-                    <li><NavLink onClick={userLogout}>Logout</NavLink></li>
-                </> : <>
+                !user?.token && <>
                     <li><NavLink to="/login">Login</NavLink></li>
                     <li><NavLink to="/register">Register</NavLink></li>
+                </>
+            }
+            {
+                user?.token && <>
+                    {
+                        user.role === 'user' && <>
+                            <li><NavLink to="/blog">News</NavLink></li>
+                            <li><NavLink to="/portfolio">Portfolio</NavLink></li>
+                            <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+                        </>
+                    }
+                    {
+                        user.role === 'admin' && <>
+                            <li><NavLink to="/admin/banner">Manage Banner</NavLink></li>
+                            <li><NavLink to="/admin/blog">Manage Blog</NavLink></li>
+                            <li><NavLink to="/admin/portfolio">Manage Portfolio</NavLink></li>
+                            <li><NavLink to="/admin/users">Manage Users</NavLink></li>
+                        </>
+                    }
+                    <li><NavLink to={'/profile'}>Profile</NavLink></li>
+                    <li><NavLink onClick={userLogout}>Logout</NavLink></li>
                 </>
             }
         </ul>

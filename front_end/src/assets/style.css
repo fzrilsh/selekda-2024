@@ -602,3 +602,87 @@ main#register .card button:hover {
         font-size: 30px;
     }
 }
+
+/* User Dashboard */
+main.dashboard {
+    padding: 40px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    gap: 60px;
+}
+
+main.dashboard section {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+main.dashboard h1 {
+    font-size: 40px;
+}
+
+main.dashboard ul {
+    list-style-type: square;
+    margin-left: 40px;
+}
+
+main.dashboard li a {
+    color: inherit;
+    font-size: 20px;
+}
+
+main.dashboard table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+main.dashboard table th, table td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+    font-size: 18px;
+}
+
+main.dashboard table tbody tr:nth-child(even){
+    background-color: #f2f2f2
+}
+
+main.dashboard table th {
+  background-color: #04AA6D;
+  color: white;
+}
+
+@media screen and (max-width: 585px) {
+    main.dashboard table th, table td {
+        padding: 4px;
+        font-size: 14px;
+    }
+
+    main.dashboard h1 {
+        font-size: 30px;
+    }
+
+    main.dashboard li a {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    main.dashboard table th, table td {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    main.dashboard h1 {
+        font-size: 30px;
+    }
+
+    main.dashboard li a {
+        font-size: 14px;
+    }
+}
