@@ -14,15 +14,13 @@ export default function Navbar(){
     return <nav>
         <ul>
             <li><NavLink to={'/'}><img src="/Computer_Logo.png" alt="Logo" /></NavLink></li>
-            <li id="nav-link"><NavLink to="/#gallery">Gallery</NavLink></li>
-            <li id="nav-link"><NavLink to="/#services">Services</NavLink></li>
-            <li id="nav-link"><NavLink to="/#portfolio">Portfolio</NavLink></li>
-            <li id="nav-link"><NavLink to="/#">News</NavLink></li>
-            <li id="nav-link"><NavLink to="/#">Testimonials</NavLink></li>
+            <li id="nav-link"><NavLink to="/blog">News</NavLink></li>
+            <li id="nav-link"><NavLink to="/portfolio">Portfolio</NavLink></li>
             {
                 user?.token ? <>
-                    <li id="nav-link"><NavLink to={import.meta.env.VITE_SERVER_BASE_URL+'/game'}>Game</NavLink></li>
-                    <li id="nav-link"><NavLink to={import.meta.env.VITE_SERVER_BASE_URL+'/dsgn'}>DSGN</NavLink></li>
+                    {
+                        user.role === 'admin' ? <li id="nav-link"><NavLink to={'/admin'}>Admin Dashboard</NavLink></li> : <li id="nav-link"><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+                    }
                     <li id="nav-link"><NavLink onClick={userLogout}>Logout</NavLink></li>
                 </> : <>
                     <li id="nav-link"><NavLink to="/login">Login</NavLink></li>
@@ -34,15 +32,13 @@ export default function Navbar(){
 
         <ul className="sidebar">
             <li id="close">X</li>
-            <li><NavLink to="/#gallery">Gallery</NavLink></li>
-            <li><NavLink to="/#services">Services</NavLink></li>
-            <li><NavLink to="/#portfolio">Portfolio</NavLink></li>
-            <li><NavLink to="/#">News</NavLink></li>
-            <li><NavLink to="/#">Testimonials</NavLink></li>
+            <li><NavLink to="/blog">News</NavLink></li>
+            <li><NavLink to="/portfolio">Portfolio</NavLink></li>
             {
                 user?.token ? <>
-                    <li><NavLink to={import.meta.env.VITE_SERVER_BASE_URL+'/game'}>Play Game</NavLink></li>
-                    <li><NavLink to={import.meta.env.VITE_SERVER_BASE_URL+'/dsgn'}>DSGN</NavLink></li>
+                    {
+                        user.role === 'admin' ? <li><NavLink to={'/admin'}>Admin Dashboard</NavLink></li> : <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+                    }
                     <li><NavLink onClick={userLogout}>Logout</NavLink></li>
                 </> : <>
                     <li><NavLink to="/login">Login</NavLink></li>

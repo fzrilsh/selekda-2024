@@ -31,7 +31,7 @@ export default function Login(){
                     <input type="password" name="password" id="password" placeholder="******" />
                 </div>
                 <div className="button">
-                    <button>Login</button>
+                    <button type="submit">Login</button>
                     <p>Don't have an account yet? <NavLink to={'/register'}>Register</NavLink></p>
                 </div>
             </form>

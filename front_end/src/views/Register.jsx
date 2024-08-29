@@ -36,7 +36,7 @@ export default function Register(){
                 </div>
                 <input type="file" name="profile_picture" id="profile_picture" required/>
                 <div className="button">
-                    <button>Register</button>
+                    <button type="submit">Register</button>
                     <p>Already have an account yet? <NavLink to={'/login'}>Login</NavLink></p>
                 </div>
             </form>

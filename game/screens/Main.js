@@ -24,4 +24,3 @@ class ScreenController {
 }
 
 export const screenController = new ScreenController()
-screenController.init()
