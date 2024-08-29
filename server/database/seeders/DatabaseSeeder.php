@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'date_of_birth' => '2007-03-18',
             'phone_number' => '08985245896',
-            'pp_path' => null,
+            'profile_picture' => null,
             'role' => 'admin'
         ]);
     }

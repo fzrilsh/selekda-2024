@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string('image_path');
+            $table->string('image');
             $table->string('title');
             $table->text('description');
             $table->foreignId('author_id')->constrained(table: 'users');

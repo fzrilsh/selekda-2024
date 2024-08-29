@@ -46,7 +46,7 @@ class AuthController extends Controller implements HasMiddleware
         $params = $request->validate([
             'name' => 'required|string',
             'username' => 'required|unique:users,username|regex:/^[a-z0-9._]+$/',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'date_of_birth' => 'required|date',
             'phone_number' => ['required', 'min:10', function(string $attribute, mixed $value, Closure $fail){
@@ -75,9 +75,6 @@ class AuthController extends Controller implements HasMiddleware
 
     public function Logout(){
         Auth::user()->currentAccessToken()->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Logout successfully'
-        ], 204);
+        return response(status: 204);
     }
 }

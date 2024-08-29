@@ -35,9 +35,11 @@ class UserController extends Controller implements HasMiddleware
         $params = $request->validate([
             'name' => 'string',
             'username' => ['regex:/^[a-z0-9._]+$/', function(string $attribute, mixed $value, Closure $fail){
-                if(Auth::user()->username !== $value && User::query()->where('username', $value)->first()) $fail(':attribute has already exists');
+                if(Auth::user()->username !== $value && User::query()->where('username', $value)->first()) $fail(':attribute has already been taken.');
             }],
-            'email' => 'email',
+            'email' => ['email', function(string $attribute, mixed $value, Closure $fail){
+                if(Auth::user()->email !== $value && User::query()->where('email', $value)->first()) $fail(':attribute has already been taken.');
+            }],
             'password' => 'min:6',
             'date_of_birth' => 'date',
             'phone_number' => ['required', 'min:10', function(string $attribute, mixed $value, Closure $fail){

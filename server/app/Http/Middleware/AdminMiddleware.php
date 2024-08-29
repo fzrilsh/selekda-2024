@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -15,6 +17,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(Auth::user()->role !== 'admin') throw new HttpResponseException(response()->json([
+            'status' => 'forbidden',
+            'message' => 'Forbidden access'
+        ], 403));
         return $next($request);
     }
 }

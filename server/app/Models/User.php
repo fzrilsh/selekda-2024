@@ -26,7 +26,8 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -37,11 +38,16 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'date_of_birth' => 'date',
             'password' => 'hashed',
         ];
     }
 
     public function Scores(){
         return $this->hasMany(GameLeaderboard::class);
+    }
+
+    public function Blogs(){
+        return $this->hasMany(Blog::class, 'author_id');
     }
 }
