@@ -18,7 +18,7 @@ export default function Home(){
                 <h1>Lorem Ipsum Dolor</h1>
                 <p>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</p>
             </div>
-        </section>
+        </section>  
 
         <section id="gallery">
             <header>
