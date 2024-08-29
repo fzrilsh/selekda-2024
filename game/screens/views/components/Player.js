@@ -33,8 +33,7 @@ export default class Player {
     }
 
     listen(){
-        // setInterval(this.listen.bind(this), 60);
-        requestAnimationFrame(this.listen.bind(this))
+        if(screenController.gameboard.gameStarted) requestAnimationFrame(this.listen.bind(this))
 
         //direction
         if(this.left) this.toLeft()
@@ -44,6 +43,8 @@ export default class Player {
     }
 
     listenAnimation(){
+        if(!screenController.gameboard.gameStarted) return;
+
         //animation
         if(!this.left && !this.right && !this.top) this.state = 'Idle'
         if(this.top) this.state = 'Jump'
@@ -100,7 +101,7 @@ export default class Player {
         this.kick = false //space
 
         window.addEventListener('keydown', ({key}) => {
-            if(this.isBot) return;
+            if(this.isBot || !screenController.gameboard.gameStarted) return;
             switch(key){
                 case 'w':
                     this.move('top', true)
@@ -122,7 +123,7 @@ export default class Player {
         })
 
         window.addEventListener('keyup', ({key}) => {
-            if(this.isBot) return;
+            if(this.isBot || !screenController.gameboard.gameStarted) return;
             switch(key){
                 case 'w':
                     this.move('top', false)

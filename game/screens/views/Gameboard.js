@@ -1,10 +1,12 @@
 import { screenController } from "../Main.js"
 import Ball from "./components/Ball.js"
 import Gawang from "./components/Gawang.js"
+import Item from "./components/Item.js"
 import Player from "./components/Player.js"
 
 export default class Gameboard {
     constructor(){
+        this.gameStarted = false
         this.el = document.querySelector('.screen.gameboard')
         this.mainBoard = this.el.querySelector('.main')
 
@@ -22,6 +24,10 @@ export default class Gameboard {
         this.ball = null
 
         this.timer = null
+        this.intervalTimer = null
+        this.intervalItem = null
+
+        this.items = []
     }
 
     mount(){
@@ -44,10 +50,55 @@ export default class Gameboard {
         this.timer = this.level === 'easy' ? '30' : this.level === 'medium' ? 20 : 15
         this.makeFlag()
         this.intializeInfo()
+        this.intializeInterval()
+
+        this.gameStarted = true
+
+        window.addEventListener('keydown', ({key}) => {
+            if(key === 'Escape') this.pause()
+        })
+
+        this.el.querySelector('#history-button').onclick = () => {
+            alert()
+        }
     }
 
     unMount(){
         this.el.classList.remove('active')
+    }
+
+    gameOver(){
+        this.gameStarted = false
+
+        clearInterval(this.intervalItem)
+        clearInterval(this.intervalTimer)
+    }
+
+    pause(){
+        confirm("Game paused, continue?")
+    }
+
+    intializeInterval(){
+        let timerEl = this.el.querySelector('header .timer span')
+            timerEl.textContent = this.timer
+        this.intervalTimer = setInterval(() => {
+            if(!screenController.gameboard.gameStarted) return;
+
+            this.timer--
+            timerEl.textContent = this.timer
+
+            if(this.timer <= 0){
+                clearInterval(this.intervalTimer)
+                this.gameOver()
+            }
+        }, 1000);
+
+        this.intervalItem = setInterval(() => {
+            if(!screenController.gameboard.gameStarted) return;
+
+            let types = ['Decrease Ball', 'Diamond Ice', 'Increase Ball']
+            this.items.push(new Item(types[Math.floor(Math.random()*types.length)]))
+        }, 5000);
     }
 
     intializeInfo(){
