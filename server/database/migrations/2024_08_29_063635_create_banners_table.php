@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('game_leaderboards', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(table: 'users')->onDelete('cascade');
-            $table->string('username');
-            $table->string('country');
-            $table->integer('score');
+            $table->string('title');
+            $table->string('image');
+            $table->text('description');
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('game_leaderboards');
+        Schema::dropIfExists('banners');
     }
 };

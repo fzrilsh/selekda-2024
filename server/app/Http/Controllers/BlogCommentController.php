@@ -57,7 +57,7 @@ class BlogCommentController extends Controller implements HasMiddleware
             'name' => 'string',
             'email' => 'email',
             'subject' => 'string',
-            'comment' => 'text',
+            'comment' => 'string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
                 if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
             }]
@@ -69,8 +69,8 @@ class BlogCommentController extends Controller implements HasMiddleware
         $comment->update($params);
         return response()->json([
             'status' => 'success',
-            'message' => 'Success post comment'
-        ], 201);
+            'message' => 'Success update comment'
+        ]);
     }
 
     public function destroy(Request $request){
@@ -78,9 +78,6 @@ class BlogCommentController extends Controller implements HasMiddleware
         if(!($comment = $blog->comments()->getQuery()->find($request->comment_id))) return response()->json(['status' => 'not-found', 'message' => 'Comment not found'], 400);
 
         $comment->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Success delete comment'
-        ], 204);
+        return response(status:204);
     }
 }

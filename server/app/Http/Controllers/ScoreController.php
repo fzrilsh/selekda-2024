@@ -20,6 +20,7 @@ class ScoreController extends Controller implements HasMiddleware
     public function index(){
         $scores = GameLeaderboard::all()->sortBy([['score', 'desc']])->values();
         return response()->json([
+            'status' => 'success',
             'message' => 'Success get game leaderboard',
             'data' => $scores
         ]);
@@ -28,11 +29,11 @@ class ScoreController extends Controller implements HasMiddleware
     public function store(Request $request){
         $params = $request->validate([
             'username' => 'required|string',
-            'score' => 'required|string',
+            'score' => 'required|numeric|min:0',
             'country' => 'required|string'
         ]);
 
         Auth::user()->Scores()->create($params);
-        return response()->json(['message' => 'success insert score'], 201);
+        return response()->json(['status' => 'success', 'message' => 'success insert score'], 201);
     }
 }

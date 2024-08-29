@@ -20,4 +20,12 @@ class Blog extends Model
     public function Tags(){
         return $this->hasMany(BlogTag::class);
     }
+
+    public function getTagsAttribute(){
+        return $this->Tags()->get();
+    }
+
+    public function getCommentsAttribute(){
+        return $this->comments()->get();
+    }
 }

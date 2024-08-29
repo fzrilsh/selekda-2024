@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('captchas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(table: 'users');
+            $table->foreignId('user_id')->constrained(table: 'users')->onDelete('cascade');
             $table->string('content');
             $table->timestamps();
         });

@@ -35,39 +35,43 @@ class UserController extends Controller implements HasMiddleware
         return response()->json([
             'status' => 'success',
             'message' => 'Success get user data',
-            'data' => $user
+            'data' => $user->append(['leaderboard'])
         ]);
     }
 
     public function update(Request $request, string $id){
-        if(Auth::user()->id !== $id) return response()->json(['status' => 'forbidden', 'message' => 'Forbidden Access'], 403);
+        $user = User::query()->find($id);
+        if(!$user) return response()->json([
+            'status' => 'not-found',
+            'message' => 'User not found'
+        ], 400);
+        if(Auth::user()->id !== $user->id) return response()->json(['status' => 'forbidden', 'message' => 'Forbidden Access'], 403);
 
         $params = $request->validate([
             'name' => 'string',
             'username' => ['regex:/^[a-z0-9._]+$/', function(string $attribute, mixed $value, Closure $fail){
-                if(Auth::user()->username !== $value && User::query()->where('username', $value)->first()) $fail(':attribute has already been taken.');
+                if(Auth::user()->username !== $value && User::query()->where('username', $value)->first()) $fail('The :attribute has already been taken.');
             }],
             'email' => ['email', function(string $attribute, mixed $value, Closure $fail){
-                if(Auth::user()->email !== $value && User::query()->where('email', $value)->first()) $fail(':attribute has already been taken.');
+                if(Auth::user()->email !== $value && User::query()->where('email', $value)->first()) $fail('The :attribute has already been taken.');
             }],
             'password' => 'min:6',
             'date_of_birth' => 'date',
-            'phone_number' => ['required', 'min:10', function(string $attribute, mixed $value, Closure $fail){
-                if($value[0] !== '0') $fail(':attribute is not valid phone number');
+            'phone_number' => ['min:10', function(string $attribute, mixed $value, Closure $fail){
+                if(!$value || $value[0] !== '0') $fail('The :attribute is not valid phone number');
             }],
             'profile_picture' => 'file|mimes:png, jpeg, jpg'
         ]);
 
-        if($params['profile_picture']){
+        if(isset($params['profile_picture'])){
             $path = Storage::putFile('profile_picture', $params['profile_picture']);
             $params['profile_picture'] = $path;
         }
 
-        if($params['password']) $params['password'] = Hash::make($params['password']);
+        if(isset($params['password'])) $params['password'] = Hash::make($params['password']);
 
-        $user = User::query()->find($id);
         $user->update($params);
-        $user->currentAccessToken()->delete();
+        Auth::user()->currentAccessToken()->delete();
         return response()->json([
             'status' => 'success',
             'message' => 'Update user success, logged out'

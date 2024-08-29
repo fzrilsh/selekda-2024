@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\Blog;
-use App\Models\BlogTag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -17,8 +16,16 @@ class BlogController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum'),
-            new Middleware(AdminMiddleware::class)
+            new Middleware(AdminMiddleware::class, except:['index'])
         ];
+    }
+
+    public function index(){
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Success get all blog',
+            'data' => Blog::all()->append(['tags', 'comments'])
+        ]);
     }
 
     public function store(Request $request){
@@ -63,9 +70,36 @@ class BlogController extends Controller implements HasMiddleware
             'tags' => 'string'
         ]);
 
-        if($params['image']){
+        if(isset($params['image'])){
+            Storage::delete($blog->image);
             $path = Storage::putFile('blog_image', $params['image']);
             $params['image'] = $path;
         }
+
+        if(isset($params['tags'])){
+            $blog->Tags()->delete();
+            foreach(explode(',', $params['tags']) as $tag){
+                $blog->Tags()->create(['name' => $tag]);
+            }
+            unset($params['tags']);
+        }
+
+        $blog->update($params);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Success update blog',
+            'data' => $blog
+        ]);
+    }
+
+    public function destroy(string $id){
+        if(!($blog = Blog::query()->find($id))) return response()->json([
+            'status' => 'not-found',
+            'message' => 'Blog not found'
+        ], 400);
+
+        Storage::delete($blog->image);
+        $blog->delete();
+        return response(status: 204);
     }
 }

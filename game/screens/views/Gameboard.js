@@ -48,7 +48,7 @@ export default class Gameboard {
         this.ball = new Ball()
         this.ball.move('bottom', true)
 
-        this.timer = 2//this.level === 'easy' ? '30' : this.level === 'medium' ? 20 : 15
+        this.timer = this.level === 'easy' ? '30' : this.level === 'medium' ? 20 : 15
         this.makeFlag()
         this.intializeInfo()
         this.intializeInterval()
@@ -158,5 +158,14 @@ export default class Gameboard {
 
             this.el.querySelector('.flags').appendChild(el)
         }
+    }
+
+    collisions(a, b){
+        return !(
+            ((a.offsetTop + a.offsetHeight) < (b.offsetTop)) ||
+            (a.offsetTop > (b.offsetTop + b.offsetHeight)) ||
+            ((a.offsetLeft + a.offsetWidth) < b.offsetLeft) ||
+            (a.offsetLeft > (b.offsetLeft + b.offsetWidth))
+        );    
     }
 }

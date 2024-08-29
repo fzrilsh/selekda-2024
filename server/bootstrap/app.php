@@ -20,8 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function(AuthenticationException $e){
             throw new HttpResponseException(response()->json([
-                'status' => 'token-invalid',
-                'Invalid token.'
+                'status' => 'invalid',
+                'message' => 'Invalid token.'
             ], 401));
         });
     })->create();
