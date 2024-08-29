@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Captcha;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class BlogCommentController extends Controller implements HasMiddleware
 {
@@ -31,7 +35,10 @@ class BlogCommentController extends Controller implements HasMiddleware
             'name' => 'required|string',
             'email' => 'required|email',
             'subject' => 'required|string',
-            'comment' => 'required|text'
+            'comment' => 'required|text',
+            'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
+                if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
+            }]
         ]);
 
         $blog->comments()->create($params);
@@ -48,7 +55,10 @@ class BlogCommentController extends Controller implements HasMiddleware
             'name' => 'string',
             'email' => 'email',
             'subject' => 'string',
-            'comment' => 'text'
+            'comment' => 'text',
+            'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
+                if(!Captcha::query()->where('content', $value)->where('user_id', Auth::user()->id)->first()) $fail('Captcha is invalid.');
+            }]
         ]);
 
         $comment->update($params);
@@ -56,5 +66,16 @@ class BlogCommentController extends Controller implements HasMiddleware
             'status' => 'success',
             'message' => 'Success post comment'
         ], 201);
+    }
+
+    public function destroy(Request $request){
+        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 400);
+        if(!($comment = $blog->comments()->getQuery()->find($request->comment_id))) return response()->json(['status' => 'not-found', 'message' => 'Comment not found'], 400);
+
+        $comment->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Success delete comment'
+        ], 204);
     }
 }
