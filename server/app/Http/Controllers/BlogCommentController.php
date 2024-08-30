@@ -37,7 +37,8 @@ class BlogCommentController extends Controller implements HasMiddleware
             'subject' => 'required|string',
             'comment' => 'required|string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
-                $captcha = Captcha::query()->where('user_id', Auth::user()->id)->first();
+                $id = explode('|', $value)[0];
+                $captcha = Captcha::query()->find($id);
                 if(!$captcha || !CaptchaController::check($captcha, $value)) $fail('Captcha is invalid.');
             }]
         ]);
@@ -59,7 +60,8 @@ class BlogCommentController extends Controller implements HasMiddleware
             'subject' => 'string',
             'comment' => 'string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
-                $captcha = Captcha::query()->where('user_id', Auth::user()->id)->first();
+                $id = explode('|', $value)[0];
+                $captcha = Captcha::query()->find($id);
                 if(!$captcha || !CaptchaController::check($captcha, $value)) $fail('Captcha is invalid.');
             }]
         ]);
