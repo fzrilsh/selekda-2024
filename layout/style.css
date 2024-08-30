@@ -546,6 +546,7 @@ section#popular .cards .card .content div {
 section#blog-detail {
     margin-top: 100px;
     margin-left: 200px;
+    height: fit-content;
 }
 
 section#blog-detail header h1 {
@@ -559,7 +560,7 @@ section#blog-detail header p {
 
 section#blog-detail .hero {
     margin-top: 20px;
-    width: 1000px;
+    width: 80%;
     height: 540px;
     border-radius: 24px;
 }
@@ -600,5 +601,76 @@ section#blog-detail .author img {
 .comment-section {
     margin-top: 40px;
     width: 90%;
-    height: 400px;
+    min-height: 400px;
+}
+
+.comment-section form {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.comment-section form .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.comment-section form .buttons input {
+    width: 20px;
+    text-align: center;
+}
+
+.comment-section .comments {
+    margin-top: 50px;
+    list-style-type: none;
+    min-height: 100px;
+}
+
+.comment-section .comments h1 {
+    font-size: 40px;
+}
+
+.comment-section .comments li {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.comment-section .comments li img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.comment-section .comments li div {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment-section .comments li div aside p {
+    max-width: 500px;
+}
+
+@media screen and (max-width: 760px){
+    section#blog-detail {
+        margin-left: 20px;
+    }
+
+    .comment-section form label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 }
