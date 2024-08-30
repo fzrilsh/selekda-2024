@@ -57,8 +57,8 @@ export default function Dashbaord() {
         <section id="games">
             <h1>Our Apps</h1>
             <ul>
-                <li><NavLink to={'/game'}>World Head Football</NavLink></li>
-                <li><NavLink to={'/apps'}>DSGN Illustrator</NavLink></li>
+                <li><a href="/game/">World Head Football</a></li>
+                <li><a href="/apps/">DSGN Illustrator</a></li>
             </ul>
         </section>
         <section>
