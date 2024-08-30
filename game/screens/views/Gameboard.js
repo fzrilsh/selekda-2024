@@ -82,6 +82,19 @@ export default class Gameboard {
 
     gameOver(){
         this.gameStarted = false
+        fetch(config.serverUrl+'/scores', {
+            method: 'post',
+            body: JSON.stringify({
+                'username': this.username,
+                'score': this.scores[0],
+                'country': this.my_team
+            }),
+            headers: new Headers({
+                Authorization: 'Bearer '+screenController.user?.token,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            })
+        })
 
         clearInterval(this.intervalItem)
         clearInterval(this.intervalTimer)
@@ -92,24 +105,7 @@ export default class Gameboard {
         modal.querySelector('#country').textContent = this.my_team
         modal.querySelector('#score').textContent = this.scores[0]
         modal.querySelector('button#save').onclick = async() => {
-            try {
-                let get = await fetch(config.serverUrl+'/scores', {
-                    method: 'post',
-                    body: {
-                        'username': this.username,
-                        'score': this.scores[0],
-                        'country': this.my_team
-                    },
-                    headers: new Headers({
-                        Authorization: 'Bearer '+screenController.user?.token,
-                        Accept: 'application/json'
-                    })
-                })
-
-                alert('Success save the match')
-            } catch (error) {
-                alert('Server error, try again later')
-            }
+            alert('Success save the match')
         }
         modal.querySelector('button#restart').onclick = () => {
             document.location.reload()
