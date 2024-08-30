@@ -429,3 +429,176 @@ footer#footer ul {
     display: flex;
     gap: 10px;
 }
+
+
+/* Blog List */
+section#popular {
+    margin-top: 50px;
+    width: 100%;
+    min-height: 500px;
+}
+
+section#popular header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section#popular header h1 {
+    font-size: 60px;
+    border-bottom: 10px solid #17459E;
+}
+
+section#popular .cards {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+}
+
+section#popular .cards .card:last-child {
+    margin-bottom: 20px;
+}
+
+section#popular .cards .card {
+    width: 50%;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    box-shadow: 2px 3px 10px black;
+    text-decoration: none;
+    color: inherit;
+}
+
+section#popular .cards .card img {
+    height: 100%;
+}
+
+section#popular .cards .card .content {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+section#popular .cards .card .content h1 {
+    font-size: 40px;
+}
+
+section#popular .cards .card .content div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 1240px){
+    section#popular .card img {
+        height: 100%;
+    }
+    section#popular .cards .card .content h1 {
+        font-size: 30px;
+    }
+    section#popular .cards .card .content p {
+        font-size: 10px;
+    }
+    section#popular .cards .card .content div {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 925px){
+    section#popular .cards .card .content h1 {
+        font-size: 24px;
+    }
+    section#popular .cards .card .content p {
+        font-size: 8px;
+    }
+    section#popular .cards .card .content div {
+        font-size: 8;
+    }
+}
+
+@media screen and (max-width: 760px){
+    section#popular .cards .card {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 380px){
+    section#popular .cards .card img {
+        height: 120px;
+    }
+    section#popular .cards .card {
+        width: 100%;
+    }
+}
+
+/* Blog Detail */
+section#blog-detail {
+    margin-top: 100px;
+    margin-left: 200px;
+}
+
+section#blog-detail header h1 {
+    font-size: 100px;
+}
+
+section#blog-detail header p {
+    color: #737373;
+    font-size: 16px;
+}
+
+section#blog-detail .hero {
+    margin-top: 20px;
+    width: 1000px;
+    height: 540px;
+    border-radius: 24px;
+}
+
+section#blog-detail .content {
+    margin-top: 50px;
+}
+
+section#blog-detail .content p {
+    width: 80%;
+    text-wrap: stable;
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+section#blog-detail #tags {
+    color: #737373;
+    font-size: 14px;
+}
+
+section#blog-detail .author {
+    margin-top: 20px;
+    width: 300px;
+    height: 100px;
+    border-radius: 15px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+section#blog-detail .author img {
+    border-radius: 50%;
+}
+
+.comment-section {
+    margin-top: 40px;
+    width: 90%;
+    height: 400px;
+}

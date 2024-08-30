@@ -123,6 +123,7 @@ export default class Workspace {
                 if(this.history.length > 0) this.groupHistory.push(this.history)
                 if(this.groupHistory.length > 5) this.groupHistory.shift()
                 this.canvas.removeEventListener('mousemove', draw, true)
+                this.canvas.removeEventListener('mousemove', erase, true)
             }
 
             window.addEventListener('mouseup', removeListener, false)

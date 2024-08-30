@@ -31,10 +31,7 @@ export default function Navbar(){
                     }
                     {
                         user.role === 'admin' && <>
-                            <li id="nav-link"><NavLink to="/admin/banner">Manage Banner</NavLink></li>
-                            <li id="nav-link"><NavLink to="/admin/blog">Manage Blog</NavLink></li>
-                            <li id="nav-link"><NavLink to="/admin/portfolio">Manage Portfolio</NavLink></li>
-                            <li id="nav-link"><NavLink to="/admin/users">Manage Users</NavLink></li>
+                            <li id="nav-link"><NavLink to="/admin">Admin Dashboard</NavLink></li>
                         </>
                     }
                     <li id="nav-link"><NavLink to={'/profile'}>Profile</NavLink></li>
@@ -63,10 +60,7 @@ export default function Navbar(){
                     }
                     {
                         user.role === 'admin' && <>
-                            <li><NavLink to="/admin/banner">Manage Banner</NavLink></li>
-                            <li><NavLink to="/admin/blog">Manage Blog</NavLink></li>
-                            <li><NavLink to="/admin/portfolio">Manage Portfolio</NavLink></li>
-                            <li><NavLink to="/admin/users">Manage Users</NavLink></li>
+                            <li><NavLink to="/admin">Admin Dashboard</NavLink></li>
                         </>
                     }
                     <li><NavLink to={'/profile'}>Profile</NavLink></li>
