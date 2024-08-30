@@ -102,9 +102,15 @@ export default class Gameboard {
                     }),
                     headers: new Headers({
                         Authorization: 'Bearer '+screenController.user?.token,
-                        Accept: 'application/json'
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
                     })
                 })
+                console.log(JSON.stringify({
+                    'username': this.username,
+                    'score': this.scores[0],
+                    'country': this.my_team
+                }))
 
                 alert('Success save the match')
             } catch (error) {
