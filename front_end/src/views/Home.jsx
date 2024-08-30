@@ -1,4 +1,6 @@
 export default function Home(){
+    document.title = 'Webtech Indonesia'
+
     return <main>
 
         <section id="banner">

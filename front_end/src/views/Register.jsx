@@ -4,6 +4,8 @@ import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 
 export default function Register(){
+    document.title = 'Register'
+
     const {user, login} = useAuth()
     const {fetch} = useFetch()
     const navigate = useNavigate()

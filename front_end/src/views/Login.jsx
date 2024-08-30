@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 
 export default function Login(){
+    document.title = 'Login'
+
     const {user, login} = useAuth()
     const {fetch} = useFetch()
     const navigate = useNavigate()

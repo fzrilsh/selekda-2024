@@ -4,6 +4,8 @@ import useFetch from "../hooks/useFetch"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 export default function Dashbaord() {
+    document.title = 'Dashboard'
+
     const {user} = useAuth()
     const {fetch} = useFetch()
     const navigate = useNavigate()

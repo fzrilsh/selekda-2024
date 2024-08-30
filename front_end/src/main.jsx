@@ -10,7 +10,7 @@ import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <UseAuthProvider>
         <Navbar />
@@ -18,5 +18,5 @@ createRoot(document.getElementById('root')).render(
         <Footer />
       </UseAuthProvider>
     </BrowserRouter>
-  </StrictMode>,
+  // </StrictMode>,
 )

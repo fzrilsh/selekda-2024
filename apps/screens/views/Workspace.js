@@ -61,6 +61,15 @@ export default class Workspace {
         const coloursEvent = () => { this.el.querySelector('.colour .display').style.background = `rgb(${this.colours.red.value}, ${this.colours.green.value}, ${this.colours.blue.value})` }
         Object.values(this.colours).forEach(v => v.onchange = () => coloursEvent())
 
+        this.tools.export.onclick = () => {
+            let url = this.canvas.toDataURL('image/png')
+
+            let link = document.createElement('a')
+                link.href = url
+                link.download = screenController.home.filename.value+'.png',
+                link.click()
+        }
+
         this.moveEvent()
         this.shortCutEvent()
     }

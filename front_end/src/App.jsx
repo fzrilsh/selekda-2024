@@ -1,9 +1,9 @@
 import { useRoutes } from "react-router-dom";
-import Game from "./views/Game";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashbaord from "./views/Dashboard";
+import AdminDashboard from "./views/AdminDashboard";
 
 export default function App(){
   return useRoutes([
@@ -22,6 +22,10 @@ export default function App(){
     {
       path: '/dashboard',
       element: <Dashbaord />
+    },
+    {
+      path: '/admin',
+      element: <AdminDashboard />
     }
   ])
 }

@@ -57,7 +57,7 @@ nav li#open {
     display: none;
 }
 
-.sidebar {
+ul.sidebar {
     display: none;
     position: fixed;
     right: 0;
@@ -71,7 +71,7 @@ nav li#open {
     z-index: 99;
 }
 
-.sidebar li:first-child {
+ul.sidebar li:first-child {
     margin-top: 10px;
     font-size: 40px;
     cursor: pointer;
@@ -673,4 +673,64 @@ section#blog-detail .author img {
         align-items: center;
         flex-direction: column;
     }
+}
+
+/* Admin Dashboard */
+div.sidebar {
+    position: absolute;
+    background-color: #25346C;
+    top: 20%;
+    width: 200px;
+    height: 400px;
+    color: white;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 20px;
+}
+
+div.sidebar h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+div.sidebar ul {
+    list-style-type: none;
+}
+
+div.sidebar ul li {
+    font-size: 18px;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+section#users {
+    margin-top: 120px;
+    margin-left: 300px;
+}
+
+section#users h1 {
+    font-size: 50px;
+}
+
+section#users table {
+    border-collapse: collapse;
+}
+
+section#users table th {
+    background-color: #04AA6D;
+    color: white;
+}
+
+section#users table td.action a {
+    color: red;
+    text-decoration: none;
+}
+
+section#users table th, table td {
+    font-size: 18px;
+    padding: 10px;
+}
+
+section#charts {
+    margin-left: 240px;
 }

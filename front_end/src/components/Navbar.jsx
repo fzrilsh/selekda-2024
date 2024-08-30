@@ -31,6 +31,7 @@ export default function Navbar(){
                     }
                     {
                         user.role === 'admin' && <>
+                            <li id="nav-link"><input type="text" placeholder="Search..." /></li>
                             <li id="nav-link"><NavLink to="/admin">Admin Dashboard</NavLink></li>
                         </>
                     }
@@ -60,6 +61,7 @@ export default function Navbar(){
                     }
                     {
                         user.role === 'admin' && <>
+                            <li><input type="text" placeholder="Search..." /></li>
                             <li><NavLink to="/admin">Admin Dashboard</NavLink></li>
                         </>
                     }
