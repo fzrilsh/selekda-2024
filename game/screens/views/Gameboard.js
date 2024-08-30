@@ -93,13 +93,13 @@ export default class Gameboard {
         modal.querySelector('#score').textContent = this.scores[0]
         modal.querySelector('button#save').onclick = async() => {
             try {
-                let get = await fetch(config.serverUrl+'/scores', {
+                await fetch(config.serverUrl+'/scores', {
                     method: 'post',
-                    body: {
+                    body: JSON.stringify({
                         'username': this.username,
                         'score': this.scores[0],
                         'country': this.my_team
-                    },
+                    }),
                     headers: new Headers({
                         Authorization: 'Bearer '+screenController.user?.token,
                         Accept: 'application/json'
