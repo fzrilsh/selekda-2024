@@ -33,7 +33,7 @@ class BlogCommentController extends Controller implements HasMiddleware
         if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 404);
         $params = $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users,emal',
             'subject' => 'required|string',
             'comment' => 'required|string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
