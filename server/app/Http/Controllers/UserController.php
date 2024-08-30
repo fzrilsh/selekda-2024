@@ -31,7 +31,7 @@ class UserController extends Controller implements HasMiddleware
     }
 
     public function show(string $id){
-        if(!($user = User::query()->find($id))) return response()->json(['status' => 'not-found', 'message' => 'User not found'], 400);
+        if(!($user = User::query()->find($id))) return response()->json(['status' => 'not-found', 'message' => 'User not found'], 404);
         return response()->json([
             'status' => 'success',
             'message' => 'Success get user data',
@@ -44,7 +44,7 @@ class UserController extends Controller implements HasMiddleware
         if(!$user) return response()->json([
             'status' => 'not-found',
             'message' => 'User not found'
-        ], 400);
+        ], 404);
         if(Auth::user()->id !== $user->id && Auth::user()->role !== 'admin') return response()->json(['status' => 'forbidden', 'message' => 'Forbidden Access'], 403);
 
         $params = $request->validate([

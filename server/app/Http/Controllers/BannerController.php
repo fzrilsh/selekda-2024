@@ -53,7 +53,7 @@ class BannerController extends Controller implements HasMiddleware
         if(!($banner = Banner::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Banner not found'
-        ], 400);
+        ], 404);
 
         $params = $request->validate([
             'title' => 'string',
@@ -80,7 +80,7 @@ class BannerController extends Controller implements HasMiddleware
         if(!($banner = Banner::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Banner not found'
-        ], 400);
+        ], 404);
 
         $banner->delete();
         return response(status: 204);

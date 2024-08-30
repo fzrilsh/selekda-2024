@@ -21,7 +21,7 @@ class BlogCommentController extends Controller implements HasMiddleware
     }
 
     public function index(Request $request){
-        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 400);
+        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 404);
         return response()->json([
             'status' => 'success',
             'message' => 'Success get all comments',
@@ -30,7 +30,7 @@ class BlogCommentController extends Controller implements HasMiddleware
     }
 
     public function store(Request $request){
-        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 400);
+        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 404);
         $params = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -51,8 +51,8 @@ class BlogCommentController extends Controller implements HasMiddleware
     }
 
     public function update(Request $request){
-        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 400);
-        if(!($comment = $blog->comments()->getQuery()->find($request->comment_id))) return response()->json(['status' => 'not-found', 'message' => 'Comment not found'], 400);
+        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 404);
+        if(!($comment = $blog->comments()->getQuery()->find($request->comment_id))) return response()->json(['status' => 'not-found', 'message' => 'Comment not found'], 404);
         $params = $request->validate([
             'name' => 'string',
             'email' => 'email',
@@ -73,8 +73,8 @@ class BlogCommentController extends Controller implements HasMiddleware
     }
 
     public function destroy(Request $request){
-        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 400);
-        if(!($comment = $blog->comments()->getQuery()->find($request->comment_id))) return response()->json(['status' => 'not-found', 'message' => 'Comment not found'], 400);
+        if(!($blog = Blog::query()->find($request->blog_id))) return response()->json(['status' => 'not-found', 'message' => 'Blog not found'], 404);
+        if(!($comment = $blog->comments()->getQuery()->find($request->comment_id))) return response()->json(['status' => 'not-found', 'message' => 'Comment not found'], 404);
 
         $comment->delete();
         return response(status:204);

@@ -33,7 +33,7 @@ class PortfolioController extends Controller implements HasMiddleware
         if(!($portfolio = Portfolio::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Portfolio not found'
-        ], 400);
+        ], 404);
 
         $portfolio->views += 1;
         $portfolio->save();
@@ -73,7 +73,7 @@ class PortfolioController extends Controller implements HasMiddleware
         if(!($portfolio = Portfolio::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Portfolio not found'
-        ], 400);
+        ], 404);
 
         $params = $request->validate([
             'title' => 'string',
@@ -98,7 +98,7 @@ class PortfolioController extends Controller implements HasMiddleware
         if(!($portfolio = Portfolio::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Portfolio not found'
-        ], 400);
+        ], 404);
 
         $portfolio->delete();
         return response(status: 204);

@@ -32,7 +32,7 @@ class BlogController extends Controller implements HasMiddleware
         if(!($blog = Blog::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Blog not found'
-        ], 400);
+        ], 404);
 
         $blog->views += 1;
         $blog->save();
@@ -78,7 +78,7 @@ class BlogController extends Controller implements HasMiddleware
         if(!($blog = Blog::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Blog not found'
-        ], 400);
+        ], 404);
         $params = $request->validate([
             'image' => 'file|mimes:jpeg,jpg,png',
             'title' => 'string',
@@ -112,7 +112,7 @@ class BlogController extends Controller implements HasMiddleware
         if(!($blog = Blog::query()->find($id))) return response()->json([
             'status' => 'not-found',
             'message' => 'Blog not found'
-        ], 400);
+        ], 404);
 
         Storage::delete($blog->image);
         $blog->delete();
