@@ -38,6 +38,7 @@ class BlogCommentController extends Controller implements HasMiddleware
             'comment' => 'required|string',
             'captcha' => ['required', function(string $attribute, mixed $value, Closure $fail){
                 $id = explode('|', $value)[0];
+                dd($id);
                 $captcha = Captcha::query()->find($id);
                 if(!$captcha || !CaptchaController::check($captcha, $value)) $fail('Captcha is invalid.');
             }]
