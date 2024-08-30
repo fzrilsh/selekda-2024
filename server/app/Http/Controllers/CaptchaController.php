@@ -45,7 +45,6 @@ class CaptchaController extends Controller
 
     public static function check(Captcha $captcha, $answer){
         $check = Hash::check($answer, $captcha->content);
-        dd($check, $answer, $captcha);
         $captcha->delete();
 
         return $check;
