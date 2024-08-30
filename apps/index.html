@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSGN</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main>
+
+        <div class="welcome-modal">
+            <header>
+                <img src="assets/logo.png" alt="logo" height="100">
+                <h1>DSGS</h1>
+            </header>
+            <h1>Welcome, happy edit!</h1>
+        </div>
+
+        <section class="screen home">
+            <div class="selection">
+                <header>
+                    <h1>Let's start something new.</h1>
+                    <p>Start with your own document settings or from range</p>
+                </header>
+                <div class="recent">
+                    <h4>your recent items <span>(1)</span></h4>
+                    <div class="cards">
+                        <div class="card">
+                            <h4 class="card-title">Custom</h4>
+                            <p>1060 x 600 px @ 300 ppi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aside>
+                <h1>Preset Details</h1>
+                <form>
+                    <input type="text" name="filename" id="filename" class="filename" value="Untitled-1" placeholder="Filename">
+                    <label>
+                        Width
+                        <div>
+                            <input type="number" name="width" id="width" placeholder="Width" value="1060">
+                            <select name="width-type" id="width-type">
+                                <option>Pixels</option>
+                            </select>
+                        </div>
+                    </label>
+                    <label>
+                        Height
+                        <div>
+                            <input type="number" name="height" id="height" placeholder="Height" value="600">
+                            <select name="height-type" id="height-type">
+                                <option>Pixels</option>
+                            </select>
+                        </div>
+                    </label>
+                    <button>Create New</button>
+                </form>
+            </aside>
+        </section>
+
+        <section class="screen workspace">
+            <header>
+                <img src="assets/logo.png" alt="logo" height="60">
+                <div class="toolbar" id="brush">
+                    <label>
+                        Shape:
+                        <span>
+                            <input type="radio" name="shape" id="bulet" value="bulet" checked>
+                            <div class="shape bulet"></div>
+                        </span>
+                        <span>
+                            <input type="radio" name="shape" id="kotak" value="kotak">
+                            <div class="shape kotak"></div>
+                        </span>
+                    </label>
+                    <label>
+                        Size:
+                        <input type="range" id="size" min="1" max="100" value="10">
+                        <span>10px</span>
+                    </label>
+                    <label>
+                        Opacity:
+                        <span>
+                            <input type="radio" name="opacity" value="100" checked>
+                            <div class="opacity">100</div>
+                        </span>
+                        <span>
+                            <input type="radio" name="opacity" value="50">
+                            <div class="opacity">50</div>
+                        </span>
+                        <span>
+                            <input type="radio" name="opacity" value="0">
+                            <div class="opacity">0</div>
+                        </span>
+                    </label>
+                </div>
+            </header>
+            <div class="tools">
+                <label>
+                    <span>
+                        <input type="radio" name="tool" value="brush" checked>
+                        <div class="tool">Brush</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="bucket">
+                        <div class="tool">Bucket</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="eraser">
+                        <div class="tool">Eraser</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="text">
+                        <div class="tool">Text</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="move">
+                        <div class="tool">Move</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="stamp">
+                        <div class="tool">Stamp</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="picker">
+                        <div class="tool">Picker</div>
+                    </span>
+                    <span>
+                        <input type="radio" name="tool" value="shape">
+                        <div class="tool">Shape</div>
+                    </span>
+                </label>
+                <label>
+                    <span>
+                        <div class="tool" id="paste">Paste</div>
+                    </span>
+                    <span></span>
+                    <span>
+                        <div class="tool" id="undo">5 Undo</div>
+                    </span>
+                    <span>
+                        <div class="tool" id="redo">0 Redo</div>
+                    </span>
+                    <span>
+                        <div class="tool" id="zoom-in">+ Zoom</div>
+                    </span>
+                    <span>
+                        <div class="tool" id="zoom-out">- Zoom</div>
+                    </span>
+                    <span>
+                        <div class="tool" id="import">Import</div>
+                    </span>
+                    <span>
+                        <div class="tool" id="export">Export</div>
+                    </span>
+                </label>
+            </div>
+            <div class="main">
+                <div>
+                    <canvas></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>

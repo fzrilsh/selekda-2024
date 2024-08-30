@@ -9,5 +9,5 @@ if(config.env === 'production'){
 screenController.init()
 
 setInterval(() => {
-    console.clear()   
+    console.clear()
 });

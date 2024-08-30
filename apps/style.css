@@ -1,0 +1,373 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+body {
+    min-height: 100vh;
+}
+
+main {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+.welcome-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 300px;
+    z-index: 99;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s, scale 1s;
+}
+
+.welcome-modal header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.welcome-modal header h1 {
+    font-size: 50px;
+}
+
+.welcome-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.welcome-modal.active ~ .screen.active {
+    filter: blur(10px);
+}
+
+.screen {
+    position: absolute;
+    width: 1280px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: filter 1s;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.screen.home {
+    background-color: black;
+    color: white;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-direction: row;
+}
+
+.screen.home .selection {
+    padding: 20px;
+    width: calc(100% - 22%);
+    height: 100%;
+}
+
+.screen.home .selection header {
+    margin: 10px auto;
+    padding: 20px;
+    width: 80%;
+    background-color: rgb(78, 78, 78);
+    text-align: center;
+    border-radius: 20px;
+}
+
+.screen.home .selection header h1 {
+    font-size: 26px;
+}
+
+.screen.home .selection header p {
+    font-size: 20px;
+    opacity: .8;
+}
+
+.screen.home .selection .recent {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.screen.home .selection .recent h4 {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.screen.home .selection .recent h4 span {
+    opacity: .6;
+}
+
+.screen.home .selection .recent .cards {
+    margin-top: 20px;
+}
+
+.screen.home .selection .recent .card {
+    width: 200px;
+    height: 200px;
+    background-color: rgb(78, 78, 78);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border: 8px solid rgb(0, 0, 157);
+    cursor: pointer;
+    user-select: none;
+}
+
+.screen.home aside {
+    height: 100%;
+    width: 22%;
+    background-color: rgb(78, 78, 78);
+    padding: 20px;
+}
+
+.screen.home aside h1 {
+    font-size: 20px;
+    color: rgb(181, 181, 181);
+}
+
+.screen.home aside form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.screen.home aside .filename {
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid rgb(149, 149, 149);
+    font-size: 30px;
+    color: white;
+}
+
+.screen.home aside label {
+    color: rgb(181, 181, 181);
+    font-size: 16px;
+}
+
+.screen.home aside label div {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.screen.home aside label input {
+    border: none;
+    border: 1px solid black;
+    background-color: rgb(58, 57, 57);
+    width: 50%;
+    height: 20px;
+    color: white;
+    padding: 5px 10px;
+}
+
+.screen.home aside label select {
+    border: none;
+    border: 1px solid black;
+    background-color: rgb(58, 57, 57);
+    width: 100%;
+    height: 20px;
+    color: white;
+    text-align: start;
+}
+
+.screen.workspace {
+    background-color: black;
+    color: white;
+}
+
+.screen.workspace header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+}
+
+.screen.workspace header .toolbar {
+    background-color: rgb(58, 58, 58);
+    padding: 10px;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.screen.workspace header .toolbar label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    user-select: none;
+    gap: 10px;
+}
+
+.screen.workspace header .toolbar label span{
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.screen.workspace header .toolbar label span input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.screen.workspace header .toolbar label span input:checked ~ .shape {
+    border: 2px solid blue;
+}
+
+.screen.workspace header .toolbar label span .shape {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(27, 27, 27);
+    position: relative;
+}
+
+.screen.workspace header .toolbar label span .bulet::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    border-radius: 50%;
+}
+.screen.workspace header .toolbar label span .kotak::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-color: white;
+}
+
+.screen.workspace header .toolbar label .opacity {
+    width: 120%;
+    height: 120%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    background-color: rgb(27, 27, 27);
+}
+.screen.workspace header .toolbar label span input:checked ~ .opacity {
+    border: 2px solid blue;
+}
+
+.screen.workspace header img {
+    padding: 10px 30px;
+    background-color: rgb(31, 31, 31);
+}
+
+.screen.workspace .tools {
+    width: 100px;
+    height: calc(100% - 60px);
+    background-color: rgb(31, 31, 31);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.screen.workspace .tools label {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    width: 100%;
+    height: fit-content;
+    grid-template-columns: repeat(2, auto);
+}
+
+.screen.workspace .tools label span {
+    width: 40px;
+    position: relative;
+}
+.screen.workspace .tools label span input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+.screen.workspace .tools label span .tool {
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    padding: 2px;
+    background-color: rgb(62, 62, 62);
+    user-select: none;
+}
+.screen.workspace .tools label span input:checked ~ .tool {
+    border-bottom: 2px solid blue;
+}
+
+.screen.workspace .main {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.screen.workspace .main div {
+    width: 100%;
+    height: 100%;
+    scale: 50%;
+    position: relative;
+}
+
+.screen.workspace .main canvas {
+    position: absolute;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
