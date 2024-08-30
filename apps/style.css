@@ -371,3 +371,70 @@ main {
     transform: translate(-50%, -50%);
     z-index: -1;
 }
+
+.screen.workspace .bar {
+    padding: 20px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    height: calc(100% - 60px);
+    width: 200px;
+    background-color: rgb(31, 31, 31);
+}
+
+.screen.workspace .bar .colour {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.screen.workspace .bar .colour .display {
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.screen.workspace .bar .colour label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.screen.workspace .bar .colour label input {
+    width: 100px;
+    height: 5px;
+    transition: background 450ms ease-in;
+    appearance: none;
+    border-radius: 10px;
+}
+
+/* .screen.workspace .bar .colour label input#red {
+    background: red;
+}
+.screen.workspace .bar .colour label input#green {
+    background: rgb(16, 212, 16);
+}
+.screen.workspace .bar .colour label input#blue {
+    background: blue;
+} */
+
+.screen.workspace .footer {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    height: 40px;
+    width: 980px;
+    background-color: rgb(209, 206, 206);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: black;
+    gap: 100px;
+}

@@ -1,3 +1,5 @@
+import { screenController } from "../Main.js"
+
 export default class Home {
     constructor(){
         this.el = document.querySelector('.screen.home')
@@ -34,6 +36,7 @@ export default class Home {
 
         this.form.onsubmit = (e) => {
             e.preventDefault()
+            screenController.change('workspace')
         }
     }
 }

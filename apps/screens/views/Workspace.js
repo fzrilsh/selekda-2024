@@ -10,6 +10,12 @@ export default class Workspace {
 
         this.sizeSlider = this.el.querySelector('#size')
 
+        this.colours = {
+            red: this.el.querySelector('.colour #red'),
+            green: this.el.querySelector('.colour #green'),
+            blue: this.el.querySelector('.colour #blue')
+        }
+
         this.tools = {
             paste: this.el.querySelector('.tool#paste'),
             undo: this.el.querySelector('.tool#undo'),
@@ -32,6 +38,9 @@ export default class Workspace {
         this.canvas.width = screenController.home.canvasSize.width.value
         this.canvas.height = screenController.home.canvasSize.height.value
 
+        this.el.querySelector('.footer #size').textContent = `Size: ${this.canvas.width} x ${this.canvas.height}`
+        this.el.querySelector('.footer #zoom').textContent = `Zoom: ${parseFloat(window.getComputedStyle(this.mainCanvas).scale) * 100}%`
+
         this.listen()
     }
 
@@ -48,6 +57,9 @@ export default class Workspace {
         this.sizeSlider.onchange = () => {
             this.sizeSlider.nextElementSibling.textContent = this.sizeSlider.value + 'px'
         }
+
+        const coloursEvent = () => { this.el.querySelector('.colour .display').style.background = `rgb(${this.colours.red.value}, ${this.colours.green.value}, ${this.colours.blue.value})` }
+        Object.values(this.colours).forEach(v => v.onchange = () => coloursEvent())
 
         this.moveEvent()
         this.shortCutEvent()
@@ -86,7 +98,7 @@ export default class Workspace {
 
     moveEvent(){
         const draw = ({offsetX, offsetY}) => {
-            this.ctx.fillStyle = 'black'
+            this.ctx.fillStyle = this.el.querySelector('.colour .display').style.background
 
             let shape = this.el.querySelector('input[name=shape]:checked')
             let opacity = this.el.querySelector('input[name=opacity]:checked')
@@ -101,7 +113,7 @@ export default class Workspace {
                 this.ctx.fillRect(offsetX, offsetY, this.sizeSlider.value, this.sizeSlider.value)
             }
 
-            let data = {x: offsetX, y: offsetY, size: this.sizeSlider.value, shape: shape.value, opacity: this.ctx.globalAlpha}
+            let data = {x: offsetX, y: offsetY, size: this.sizeSlider.value, shape: shape.value, opacity: this.ctx.globalAlpha, style: this.ctx.fillStyle}
             this.history.push(data)
             this.allDrawed.push(data)
         }
@@ -118,33 +130,34 @@ export default class Workspace {
             }
         }
 
-        window.onload = () => {
-            const removeListener = () => {
-                if(this.history.length > 0) this.groupHistory.push(this.history)
-                if(this.groupHistory.length > 5) this.groupHistory.shift()
-                this.canvas.removeEventListener('mousemove', draw, true)
-                this.canvas.removeEventListener('mousemove', erase, true)
-            }
-
-            window.addEventListener('mouseup', removeListener, false)
-            this.canvas.addEventListener('mousedown', () => {
+        const removeListener = () => {
+            if(this.history.length > 0){
+                this.groupHistory.push(this.history)
                 this.history = []
-
-                let usedTool = this.el.querySelector('input[name=tool]:checked')
-                if(usedTool.value === 'brush') this.canvas.addEventListener('mousemove', draw, true)
-                if(usedTool.value === 'eraser') this.canvas.addEventListener('mousemove', erase, true)
-            }, false)
+            }
+            if(this.groupHistory.length > 5) this.groupHistory.shift()
+            this.canvas.removeEventListener('mousemove', draw, true)
+            this.canvas.removeEventListener('mousemove', erase, true)
         }
+
+        window.addEventListener('mouseup', removeListener, false)
+        this.canvas.addEventListener('mousedown', () => {
+            let usedTool = this.el.querySelector('input[name=tool]:checked')
+            if(usedTool.value === 'brush') this.canvas.addEventListener('mousemove', draw, true)
+            if(usedTool.value === 'eraser') this.canvas.addEventListener('mousemove', erase, true)
+        }, false)
     }
 
     zoomin(){
-        if(parseFloat(window.getComputedStyle(this.mainCanvas).scale) >= 1) return;
+        // if(parseFloat(window.getComputedStyle(this.mainCanvas).scale) >= 1) return;
         this.mainCanvas.style.scale = (parseFloat(window.getComputedStyle(this.mainCanvas).scale) + 0.1) * 100 + '%'
+        this.el.querySelector('.footer #zoom').textContent = `Zoom: ${Math.floor(parseFloat(window.getComputedStyle(this.mainCanvas).scale) * 100)}%`
     }
 
     zoomout(){
         if(parseFloat(window.getComputedStyle(this.mainCanvas).scale) <= 0.1) return;
         this.mainCanvas.style.scale = (parseFloat(window.getComputedStyle(this.mainCanvas).scale) - 0.1) * 100 + '%'
+        this.el.querySelector('.footer #zoom').textContent = `Zoom: ${Math.floor(parseFloat(window.getComputedStyle(this.mainCanvas).scale) * 100)}%`
     }
 
     undo(){
@@ -154,6 +167,7 @@ export default class Workspace {
 
         history.forEach(v => {
             this.ctx.globalAlpha = v.opacity
+            this.ctx.fillStyle = v.style
             if(v.shape === 'bulet'){
                 this.ctx.beginPath()
                 this.ctx.clearRect(v.x - v.size - 1, v.y - v.size - 1, v.size * 2 + 2, v.size * 2 + 2);
@@ -171,6 +185,7 @@ export default class Workspace {
 
         history.forEach(v => {
             this.ctx.globalAlpha = v.opacity
+            this.ctx.fillStyle = v.style
             if(v.shape === 'bulet'){
                 this.ctx.beginPath()
                 this.ctx.arc(v.x, v.y, v.size, 0, 2 * Math.PI)

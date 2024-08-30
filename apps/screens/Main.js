@@ -10,7 +10,7 @@ class ScreenController {
     }
 
     init(){
-        this.change('workspace')
+        this.change('home')
     }
 
     change(screen){
