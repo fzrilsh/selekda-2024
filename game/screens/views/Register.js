@@ -1,3 +1,4 @@
+import { config } from "../../config.js"
 import { screenController } from "../Main.js"
 
 export default class Register {
@@ -24,9 +25,24 @@ export default class Register {
         }
     }
 
+    async checkUser(){
+        try {
+        let get = await fetch(config.serverUrl+'/scores', { headers: new Headers({
+                Authorization: 'Bearer '+screenController.user?.token,
+                Accept: 'application/json'
+            }) })
+            await get.json()
+        } catch (error) {
+            window.location.href = '/login'
+        }
+    }
+
     mount(){
         this.el.classList.add('active')
         this.username.focus()
+
+        if(config.env === 'production') this.checkUser()
+        if(screenController.user?.username) this.username.value = screenController.user.username
 
         this.interval = setInterval(this.listen.bind(this));
     }

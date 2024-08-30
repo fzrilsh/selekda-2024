@@ -6,7 +6,6 @@ if(config.env === 'production'){
         window.location.href = '/'
     }
 }
-
 screenController.init()
 
 setInterval(() => {

@@ -9,6 +9,8 @@ class ScreenController {
         this.register = new Register()
         this.countdown = new Countdown()
         this.gameboard = new Gameboard()
+
+        this.user = JSON.parse(localStorage.getItem('user') ?? '{}')
     }
 
     init(){

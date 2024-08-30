@@ -1,3 +1,4 @@
+import { config } from "../../config.js"
 import { screenController } from "../Main.js"
 import Ball from "./components/Ball.js"
 import Gawang from "./components/Gawang.js"
@@ -62,15 +63,16 @@ export default class Gameboard {
         this.el.querySelector('#history-button').onclick = async() => {
             if(this.leaderboard) return alert(`Match Leaderboard:\n\n${this.leaderboard.map(v => `Name: ${v.username} | Country: ${v.country} | Score: ${v.score}`).join('\n')}`)
 
-            let data = await fetch('/server/scores', {
+            let data = await fetch(config.serverUrl+'/scores', {
                 method: 'get',
-                headers: {
-                    Authorization: 'Bearer '+JSON.parse(localStorage.getItem('user')).token
-                }
+                headers: new Headers({
+                    Authorization: 'Bearer '+screenController.user?.token,
+                    Accept: 'application/json'
+                })
             })
-            this.leaderboard = await data.json()
+            this.leaderboard = (await data.json()).data
 
-            alert(`Match Leaderboard:\n\n${this.leaderboard.map(v => `Name: ${v.username} | Country: ${v.country} | Score: ${v.score}`).join('\n')}`)
+            alert(`Match Leaderboard:\n- ${this.leaderboard.map(v => `Name: ${v.username} | Country: ${v.country} | Score: ${v.score}`).join('\n- ')}`)
         }
     }
 
@@ -89,20 +91,25 @@ export default class Gameboard {
         modal.querySelector('#username').textContent = this.username
         modal.querySelector('#country').textContent = this.my_team
         modal.querySelector('#score').textContent = this.scores[0]
-        modal.querySelector('button#save').onclick = () => {
-            fetch('/server/scores', {
-                method: 'post',
-                body: {
-                    'username': this.username,
-                    'score': this.scores[0],
-                    'country': this.my_team
-                },
-                headers: {
-                    Authorization: 'Bearer '+JSON.parse(localStorage.getItem('user')).token
-                }
-            }).then(() => {
+        modal.querySelector('button#save').onclick = async() => {
+            try {
+                let get = await fetch(config.serverUrl+'/scores', {
+                    method: 'post',
+                    body: {
+                        'username': this.username,
+                        'score': this.scores[0],
+                        'country': this.my_team
+                    },
+                    headers: new Headers({
+                        Authorization: 'Bearer '+screenController.user?.token,
+                        Accept: 'application/json'
+                    })
+                })
+
                 alert('Success save the match')
-            })
+            } catch (error) {
+                alert('Server error, try again later')
+            }
         }
         modal.querySelector('button#restart').onclick = () => {
             document.location.reload()
