@@ -1,18 +1,35 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import useFetch from "../hooks/useFetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Register(){
     const {user, login} = useAuth()
     const {fetch} = useFetch()
     const navigate = useNavigate()
 
+    const [captchaContent, setCaptchaContent] = useState({})
+    const getCaptcha = async() => {
+        let resp = await fetch({ method: 'get', path: '/captcha' })
+        if(resp.status) setCaptchaContent(resp.data)
+    }
+
     const submitHandler = async(e) => {
         e.preventDefault()
 
+        let value = Object.fromEntries(new FormData(e.target))
+        let captchaValidator = await fetch({ method: 'put', path: '/captcha/'+captchaContent.id, value: {answer: value.captcha} })
+        if(!captchaValidator.status){
+            alert('Captcha is invalid.')
+            getCaptcha()
+            return;
+        }
+
         let resp = await fetch({ method: 'post', path: '/register', value: new FormData(e.target) })
-        if(!resp.status) return alert(resp.message)
+        if(!resp.status){
+            getCaptcha()
+            return alert(resp.message)
+        }
 
         login(resp.data)
         navigate('/')
@@ -20,6 +37,7 @@ export default function Register(){
 
     useEffect(() => {
         if(user?.token) return navigate('/')
+        if(!captchaContent?.id) getCaptcha()
     })
 
     return <main id="register">
@@ -33,6 +51,10 @@ export default function Register(){
                     <input type="password" name="password" id="password" placeholder="******" required/>
                     <input type="date" name="date_of_birth" id="date_of_birth" placeholder="" required/>
                     <input type="tel" name="phone_number" id="phone_number" placeholder="0812345678" required/>
+                    <div className="captcha">
+                        <span>{captchaContent?.question} =</span>
+                        <input type="text" name="captcha" id="captcha" required />
+                    </div>
                 </div>
                 <input type="file" name="profile_picture" id="profile_picture" required/>
                 <div className="button">

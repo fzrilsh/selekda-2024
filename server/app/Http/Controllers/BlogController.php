@@ -67,7 +67,6 @@ class BlogController extends Controller implements HasMiddleware
             $blog->Tags()->create(['name' => $tag]);
         }
 
-
         return response()->json([
             'status' => 'success',
             'message' => 'Success create blog',

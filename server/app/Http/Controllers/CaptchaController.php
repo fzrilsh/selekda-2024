@@ -10,23 +10,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 
-class CaptchaController extends Controller implements HasMiddleware
+class CaptchaController extends Controller
 {
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum')
-        ];
-    }
-
     public function index(){
         $first = rand(10, 29);
         $second = rand(10, 29);
         $content = Hash::make($first + $second);
-        if($captcha = Captcha::query()->where('user_id', Auth::user()->id)->first()) $captcha->delete();
 
-        $captcha = Captcha::query()->create(['content' => $content, 'user_id' => Auth::user()->id]);
-        $captcha->question = "$first + $second";
+        $captcha = Captcha::query()->create(['content' => $content]);
+        $captcha->question = "$first+$second";
         return response()->json([
             'status' => 'success',
             'message' => 'Make captcha successfully',
@@ -37,12 +29,12 @@ class CaptchaController extends Controller implements HasMiddleware
     public function update(Request $request, string $id){
         if(!($captcha = Captcha::query()->find($id))) return response()->json([
             'status' => 'failed',
-            'message' => 'Captcha invalid'
+            'message' => 'Captcha invalid',
         ], 400);
 
         if(!$this->check($captcha, $request->answer)) return response()->json([
             'status' => 'failed',
-            'message' => 'Captcha invalid'
+            'message' => 'Captcha invalid',
         ], 400);
 
         return response()->json([
@@ -53,7 +45,7 @@ class CaptchaController extends Controller implements HasMiddleware
 
     public static function check(Captcha $captcha, $answer){
         $check = Hash::check($answer, $captcha->content);
-        if($check) $captcha->delete();
+        $captcha->delete();
 
         return $check;
     }

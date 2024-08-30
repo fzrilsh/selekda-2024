@@ -686,3 +686,42 @@ main.dashboard table th {
         font-size: 14px;
     }
 }
+
+main#login .captcha {
+    width: 120px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main#login .captcha span {
+    background-color: gray;
+    padding: 3px;
+    color: white;
+}
+
+main#login .captcha input {
+    width: 10px;
+    height: 20px;
+}
+
+main#register .captcha {
+    width: 120px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main#register .captcha span {
+    width: 120px;
+    background-color: gray;
+    padding: 3px;
+    color: white;
+}
+
+main#register .captcha input {
+    width: 10px;
+    height: 20px;
+}
